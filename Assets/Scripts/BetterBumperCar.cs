@@ -5,10 +5,13 @@ using UnityEngine;
 public class BetterBumperCar : MonoBehaviour{
     Rigidbody rb;
 
-    float Direction = 3.1415f;
+    float Direction = 0;
     float rotation = 0;
     
-    public float Speed = 10.0f;
+    public float WheelRotationSpeed = 50.0f;
+
+    public float Speed = 100.0f;
+    public float RotaionalSpeed = 200.0f;
 
     Vector3 velocity;
 
@@ -18,17 +21,19 @@ public class BetterBumperCar : MonoBehaviour{
 
     public Mesh m;
 
-    GameObject wheel;
+    public GameObject wheel;
 
     void Start()
     {
-        wheel = new GameObject("Wheel");
+        if(wheel == null)
+            wheel = new GameObject("Wheel");
 
         Vector2 forward =  new Vector2(transform.forward.x, transform.forward.z);
         float forwardAngle = VectorToAngle(forward);
         Vector2 finalOffset = rotate(WheelOffset, Mathf.Deg2Rad * forwardAngle);
         
-        wheel.transform.position = transform.position + new Vector3(finalOffset.x, 0, finalOffset.y);
+        wheel.transform.position = transform.position + new Vector3(finalOffset.x, 1f, finalOffset.y);
+        wheel.transform.rotation = Quaternion.Euler(0, 180, 0);
         wheel.transform.parent = this.transform; 
         rb = GetComponent<Rigidbody>();
         if(rb == null)
@@ -42,10 +47,9 @@ public class BetterBumperCar : MonoBehaviour{
 
         float direction = Input.GetAxis("Horizontal");
 
-        wheel.transform.rotation *= Quaternion.Euler(0,  direction * 5, 0);
+        wheel.transform.rotation *= Quaternion.Euler(0,  direction * WheelRotationSpeed * Time.deltaTime, 0);
         Direction = wheel.transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
-
-        //Direction = Direction;
+        rotation = transform.rotation.eulerAngles.y;
 
         Vector2 dirVector = new Vector2(Mathf.Sin(Direction), Mathf.Cos(Direction));
 
@@ -61,21 +65,29 @@ public class BetterBumperCar : MonoBehaviour{
         Vector2 offsetDir = offset + dirVector;
 
         Vector2 Dir = (offsetDir - position).normalized;
+ 
 
         float forwardAmount = Vector2.Dot(dirVector.normalized, -forward.normalized);
         float rightAmount = Vector2.Dot(dirVector.normalized, -right.normalized);
+        
 
+        //print(string.Format("Forward, Right: [{0}, {1}]", forwardAmount, rightAmount));
         //print(rightAmount);
 
         Debug.DrawRay(new Vector3(offset.x, 0, offset.y), new Vector3(dirVector.x, 0, dirVector.y), Color.red);
         Debug.DrawRay(new Vector3(position.x, 0, position.y), new Vector3(Dir.x, 0, Dir.y), Color.blue);
 
-        float speed = Input.GetAxis("Vertical") * Speed;
+        float VInput = Input.GetAxis("Vertical");
+
+        float speed = VInput * Speed;
 
         Vector2 speedDir = (Dir * forwardAmount) * speed * Time.deltaTime;
 
+
         // if(forwardAmount < 0)
-        //     speedDir *= Vector2.right * -1;
+        //     speedDir *= new Vector2(-1, 1);
+        
+        print(speedDir);
 
         velocity += new Vector3(speedDir.x, 0, speedDir.y);
         //print(velocity);
@@ -84,14 +96,10 @@ public class BetterBumperCar : MonoBehaviour{
 
         velocity *= (1 - Resistance);
 
-        float next = VectorToAngle(Dir) * Mathf.Deg2Rad;
+        if(Input.GetKey(KeyCode.Space)){
+        }
 
-        //print();
-        //wheel.transform.rotation = Quaternion.Euler(0, Direction * Mathf.Rad2Deg, 0);
-
-        float diff = (next - rotation) / 10;
-
-        rotation += diff * (rightAmount * speed * Time.deltaTime);
+        rotation = rotation + (rightAmount * ((RotaionalSpeed * VInput)) * Time.deltaTime);
 
         rb.rotation = Quaternion.Euler(0, rotation, 0);
 
