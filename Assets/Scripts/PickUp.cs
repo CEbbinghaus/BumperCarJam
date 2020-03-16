@@ -8,12 +8,6 @@ public class PickUp : MonoBehaviour
 
     public float boostAmount = 0.5f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-   
-    }
-
     public void Spawn()
     {
         this.gameObject.SetActive(true);
@@ -31,7 +25,13 @@ public class PickUp : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             Kill();
-            collision.gameObject.GetComponent<Player>().BoostAmount += boostAmount;
+            Player player = collision.transform.GetComponent<Player>();
+
+            if (player.BoostAmount + boostAmount > 1.0f)
+                player.BoostAmount = 1.0f;
+            else
+               player.BoostAmount += boostAmount;
+
         }
     }
 
