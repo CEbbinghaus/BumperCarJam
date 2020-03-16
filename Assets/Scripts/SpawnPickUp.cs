@@ -29,13 +29,13 @@ public class SpawnPickUp : MonoBehaviour
 
         Vector3 down = pickupObject.transform.TransformDirection(-Vector3.up);
         Vector3 spawnCenter = transform.position;
-        Vector3 spawnRadius = this.transform.localScale * 4;
-        pickupObject.transform.position = new Vector3(spawnCenter.x + Random.Range(-spawnRadius.x, spawnRadius.x), Random.Range(1, 2), spawnCenter.z + Random.Range(-spawnRadius.z, spawnRadius.z));
+        Vector3 spawnRadius = this.transform.lossyScale * 4;
+        pickupObject.transform.position = new Vector3(spawnCenter.x + Random.Range(-spawnRadius.x, spawnRadius.x), spawnCenter.y + 1, spawnCenter.z + Random.Range(-spawnRadius.z, spawnRadius.z));
         Physics.Raycast(pickupObject.transform.position, down, out hit, 200);
 
         while (hit.collider.gameObject != this.gameObject)
         {
-            pickupObject.transform.position = new Vector3(spawnCenter.x + Random.Range(-spawnRadius.x, spawnRadius.x), Random.Range(1, 2), spawnCenter.z + Random.Range(-spawnRadius.z, spawnRadius.z));
+            pickupObject.transform.position = new Vector3(spawnCenter.x + Random.Range(-spawnRadius.x, spawnRadius.x), spawnCenter.y + 1, spawnCenter.z + Random.Range(-spawnRadius.z, spawnRadius.z));
 
             Physics.Raycast(pickupObject.transform.position, down, out hit, 200);
         }

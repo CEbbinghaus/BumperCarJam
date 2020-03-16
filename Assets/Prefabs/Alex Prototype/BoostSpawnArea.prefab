@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7058220333001110310}
   - component: {fileID: 7058220333001110306}
   m_Layer: 0
-  m_Name: SpawnArea
+  m_Name: BoostSpawnArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -109,5 +109,3 @@ MonoBehaviour:
   pickupPrefab: {fileID: 2314120532134395068, guid: 5fe4bdfa32ed7e44fb485e83094cdd58,
     type: 3}
   respawnDelay: 0.5
-  pickupObject: {fileID: 0}
-  pickupScript: {fileID: 0}
