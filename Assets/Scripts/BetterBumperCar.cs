@@ -23,6 +23,9 @@ public class BetterBumperCar : MonoBehaviour{
 
     public GameObject wheel;
 
+    public string VerticalInputAxis = "Vertical";
+    public string HorizontalInputAxis = "Horizontal";
+
     void Start()
     {
         if(wheel == null)
@@ -33,7 +36,7 @@ public class BetterBumperCar : MonoBehaviour{
         Vector2 finalOffset = rotate(WheelOffset, Mathf.Deg2Rad * forwardAngle);
         
         wheel.transform.position = transform.position + new Vector3(finalOffset.x, 1f, finalOffset.y);
-        wheel.transform.rotation = Quaternion.Euler(0, 180, 0);
+        wheel.transform.localRotation = Quaternion.Euler(0, 180, 0);
         wheel.transform.parent = this.transform; 
         rb = GetComponent<Rigidbody>();
         if(rb == null)
@@ -45,13 +48,13 @@ public class BetterBumperCar : MonoBehaviour{
         
         velocity = rb.velocity;
 
-        float direction = Input.GetAxis("Horizontal");
+        float direction = Input.GetAxis(HorizontalInputAxis);
         
         float wheelRotataion = wheel.transform.localEulerAngles.y + (direction * WheelRotationSpeed * Time.deltaTime);
 
         wheelRotataion = Mathf.Clamp(wheelRotataion, 90, 270);
 
-        print(wheelRotataion);
+        //print(wheelRotataion);
 
         wheel.transform.localRotation = Quaternion.Euler(Vector3.up * (wheelRotataion));
         
@@ -82,7 +85,7 @@ public class BetterBumperCar : MonoBehaviour{
         Debug.DrawRay(new Vector3(offset.x, 0, offset.y), new Vector3(dirVector.x, 0, dirVector.y), Color.red);
         Debug.DrawRay(new Vector3(position.x, 0, position.y), new Vector3(Dir.x, 0, Dir.y), Color.blue);
 
-        float VInput = Input.GetAxis("Vertical");
+        float VInput = Input.GetAxis(VerticalInputAxis);
 
         float speed = VInput * Speed;
 
