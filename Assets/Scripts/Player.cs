@@ -1,91 +1,49 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
-{
-    public float BoostAmount = 0.0f;
-    Rigidbody rb;
-    public float boostIdleRecharge = 0.02f;
-    public float movementSpeed = 30.0f;
-    public float maxPlayerMovementSpeed = 10.0f;
-    public int player = 0;
-    public float boostMultiplier = 2.0f;
-    public Vector3 spawnPoint;
-    public bool isPlayerGrounded;
-    public float maxSpeed = 20.0f;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-        spawnPoint = transform.position;
+public class Player : MonoBehaviour{
+    
+    [ReadOnly]public float Health;
+    public float MaxHealth = 100;
+    public float HealthPercent {
+        get{
+            return MaxHealth / Health;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private Vector3 velocityBeforePhysicsUpdate;
+    private Rigidbody rigidbody;
+
+    public void Awake()
     {
-        Vector3 down = transform.TransformDirection(-Vector3.up);
-        isPlayerGrounded = Physics.Raycast(transform.position, down, 1f);
+        Health = MaxHealth;
+        rigidbody = GetComponent<Rigidbody>();
+        if (rigidbody == null)
+            rigidbody = gameObject.AddComponent<Rigidbody>();
+    }
+    void FixedUpdate()
+    {
+        velocityBeforePhysicsUpdate = rigidbody.velocity;
+    }
 
-        float speed = movementSpeed;
+    public void OnCollisionEnter(Collision collision)
+    {
+        Player other = collision.collider.gameObject.GetComponent<Player>();
+        if (other == null)
+            return;
 
-        if (!isPlayerGrounded)
-            speed *= 0.25f;
+        Rigidbody rb = GetComponent<Rigidbody>();
+        Rigidbody otherRB = other.GetComponent<Rigidbody>();
 
-        if (player == 0)
+        Vector3 direction = (transform.position - other.transform.position).normalized;
+
+        float velocity = other.velocityBeforePhysicsUpdate.magnitude;
+        if (velocity > 0)
         {
-            if (Input.GetKey(KeyCode.LeftShift) && BoostAmount > 0.0f)
-            {
-                BoostAmount -= Time.deltaTime / 2;
-                speed *= boostMultiplier;
-            }
-            else
-                BoostAmount += Time.deltaTime * boostIdleRecharge;
-
-            if (Input.GetKey(KeyCode.W) && rb.velocity.z < maxPlayerMovementSpeed)
-                rb.AddForce(Vector3.forward * speed);
-
-            if (Input.GetKey(KeyCode.S) && rb.velocity.z > -maxPlayerMovementSpeed)
-                rb.AddForce(-Vector3.forward * speed);
-
-            if (Input.GetKey(KeyCode.D) && rb.velocity.x < maxPlayerMovementSpeed)
-                rb.AddForce(Vector3.right * speed);
-
-            if (Input.GetKey(KeyCode.A) && rb.velocity.x > -maxPlayerMovementSpeed)
-                rb.AddForce(-Vector3.right * speed);
+            Health -= Mathf.Pow(velocity, 0.8f);
+            print(gameObject.name + " Collided with a Object with a Velocity of: " + velocity);
         }
-        else if (player == 1)
-        {
-            if (Input.GetKey(KeyCode.RightShift) && BoostAmount > 0.0f)
-            {
-                BoostAmount -= Time.deltaTime / 2;
-                speed *= boostMultiplier;
-            }
-            else
-                BoostAmount += Time.deltaTime * boostIdleRecharge;
 
-            if (Input.GetKey(KeyCode.UpArrow) && rb.velocity.z < maxPlayerMovementSpeed)
-                rb.AddForce(Vector3.forward * speed);
 
-            if (Input.GetKey(KeyCode.DownArrow) && rb.velocity.z > -maxPlayerMovementSpeed)
-                rb.AddForce(-Vector3.forward * speed);
-
-            if (Input.GetKey(KeyCode.RightArrow) && rb.velocity.x < maxPlayerMovementSpeed)
-                rb.AddForce(Vector3.right * speed);
-
-            if (Input.GetKey(KeyCode.LeftArrow) && rb.velocity.x > -maxPlayerMovementSpeed)
-                rb.AddForce(-Vector3.right * speed);
-
-        }
-        Vector3 currentVelocity = rb.velocity;
-
-        currentVelocity.x = (currentVelocity.x > maxSpeed) ? maxSpeed : (currentVelocity.x < -maxSpeed) ? -maxSpeed : currentVelocity.x;
-
-        currentVelocity.y = (currentVelocity.y > maxSpeed) ? maxSpeed : (currentVelocity.y < -maxSpeed) ? -maxSpeed : currentVelocity.y;
-
-        currentVelocity.z = (currentVelocity.z > maxSpeed) ? maxSpeed : (currentVelocity.z < -maxSpeed) ? -maxSpeed : currentVelocity.z;
-
-        rb.velocity = currentVelocity;
+        //rb.velocity += direction * velocity;
     }
 }
