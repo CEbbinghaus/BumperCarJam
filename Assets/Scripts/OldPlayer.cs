@@ -14,6 +14,7 @@ public class OldPlayer : MonoBehaviour
     public Vector3 spawnPoint;
     public bool isPlayerGrounded;
     public float maxSpeed = 20.0f;
+    public float healthAmount = 1.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -87,5 +88,28 @@ public class OldPlayer : MonoBehaviour
         currentVelocity.z = (currentVelocity.z > maxSpeed) ? maxSpeed : (currentVelocity.z < -maxSpeed) ? -maxSpeed : currentVelocity.z;
 
         rb.velocity = currentVelocity;
+
+        if (healthAmount <= 0.0f)
+        {
+            transform.position = spawnPoint;
+            healthAmount = 1.0f;
+        }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            Rigidbody colRB = collision.gameObject.GetComponent<Rigidbody>();
+
+            float collisionVelTotal = colRB.velocity.magnitude;
+            float myVelTotal = rb.velocity.magnitude;
+
+            if (collisionVelTotal > myVelTotal)
+            {
+                healthAmount -= collisionVelTotal / 100;
+            }
+        }
+    }
+
 }
