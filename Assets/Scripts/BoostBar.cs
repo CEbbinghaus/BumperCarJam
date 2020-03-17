@@ -7,9 +7,15 @@ public class BoostBar : MonoBehaviour
 {
     // 1.0f Means full charge.
     public float BoostAmount = 0.25f;
+<<<<<<< Updated upstream
     public Slider[] boostBar = null;
     public Slider[] healthBar = null;
     public OldPlayer[] Player = null;
+=======
+    public Slider[] boostBar ;
+    public Slider[] healthBar ;
+    public OldPlayer[] Player ;
+>>>>>>> Stashed changes
     // Start is called before the first frame update
     void Start()
     {
