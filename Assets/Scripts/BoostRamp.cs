@@ -15,6 +15,7 @@ public class BoostRamp : MonoBehaviour
             rb.velocity += transform.forward * (speedMultiplier * 10);
         }
     }
+    //
 
     void OnDrawGizmosSelected()
     {
