@@ -25,7 +25,7 @@ public class PickUp : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             Kill();
-            Player player = collision.transform.GetComponent<Player>();
+            OldPlayer player = collision.transform.GetComponent<OldPlayer>();
 
             if (player.BoostAmount + boostAmount > 1.0f)
                 player.BoostAmount = 1.0f;

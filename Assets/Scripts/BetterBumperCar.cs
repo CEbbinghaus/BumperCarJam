@@ -46,8 +46,16 @@ public class BetterBumperCar : MonoBehaviour{
         velocity = rb.velocity;
 
         float direction = Input.GetAxis("Horizontal");
+        
+        float wheelRotataion = wheel.transform.localEulerAngles.y + (direction * WheelRotationSpeed * Time.deltaTime);
 
-        wheel.transform.rotation *= Quaternion.Euler(0,  direction * WheelRotationSpeed * Time.deltaTime, 0);
+        wheelRotataion = Mathf.Clamp(wheelRotataion, 90, 270);
+
+        print(wheelRotataion);
+
+        wheel.transform.localRotation = Quaternion.Euler(Vector3.up * (wheelRotataion));
+        
+
         Direction = wheel.transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
         rotation = transform.rotation.eulerAngles.y;
 
@@ -69,10 +77,7 @@ public class BetterBumperCar : MonoBehaviour{
 
         float forwardAmount = Vector2.Dot(dirVector.normalized, -forward.normalized);
         float rightAmount = Vector2.Dot(dirVector.normalized, -right.normalized);
-        
 
-        //print(string.Format("Forward, Right: [{0}, {1}]", forwardAmount, rightAmount));
-        //print(rightAmount);
 
         Debug.DrawRay(new Vector3(offset.x, 0, offset.y), new Vector3(dirVector.x, 0, dirVector.y), Color.red);
         Debug.DrawRay(new Vector3(position.x, 0, position.y), new Vector3(Dir.x, 0, Dir.y), Color.blue);
@@ -82,22 +87,11 @@ public class BetterBumperCar : MonoBehaviour{
         float speed = VInput * Speed;
 
         Vector2 speedDir = (Dir * forwardAmount) * speed * Time.deltaTime;
-
-
-        // if(forwardAmount < 0)
-        //     speedDir *= new Vector2(-1, 1);
         
-        print(speedDir);
 
         velocity += new Vector3(speedDir.x, 0, speedDir.y);
-        //print(velocity);
-
-        //print(velocity);
 
         velocity *= (1 - Resistance);
-
-        if(Input.GetKey(KeyCode.Space)){
-        }
 
         rotation = rotation + (rightAmount * ((RotaionalSpeed * VInput)) * Time.deltaTime);
 
