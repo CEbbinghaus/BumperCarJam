@@ -91,7 +91,8 @@ public class BetterBumperCar : MonoBehaviour{
 
         velocity += new Vector3(speedDir.x, 0, speedDir.y);
 
-        velocity *= (1 - Resistance);
+        //velocity.x *= (1 - Resistance);
+        //velocity.z *= (1 - Resistance);
 
         rotation = rotation + (rightAmount * ((RotaionalSpeed * VInput)) * Time.deltaTime);
 

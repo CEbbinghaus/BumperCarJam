@@ -12,7 +12,7 @@ public class BoostRamp : MonoBehaviour
         {
             GameObject go = collision.gameObject;
             Rigidbody rb = go.GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * (speedMultiplier * 10));
+            rb.velocity += transform.forward * (speedMultiplier * 10);
         }
     }
 
