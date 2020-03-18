@@ -6,7 +6,7 @@ public class BoostRamp : MonoBehaviour
 {
     public float speedMultiplier = 2.0f;
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.tag == "Player")
         {

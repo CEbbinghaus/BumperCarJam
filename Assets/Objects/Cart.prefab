@@ -202,6 +202,7 @@ MonoBehaviour:
   BoostRegen: 5
   BoostUsage: 250
   CanMove: 0
+  Spawn: {fileID: 0}
 --- !u!114 &7103626573202488989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,7 +240,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 36
+  m_Constraints: 4
   m_CollisionDetection: 1
 --- !u!65 &7302696918269642779
 BoxCollider:
