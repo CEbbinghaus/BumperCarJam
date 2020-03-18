@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour{
     
-    [ReadOnly]public float Health = 0;
+    public float Health = 0;
     public float MaxHealth = 100;
     public float HealthPercent {
         get{
@@ -11,7 +11,7 @@ public class Player : MonoBehaviour{
     }
 
 
-    [ReadOnly] public float Boost = 0;
+    public float Boost = 0;
     public float MaxBoost = 500;
     public float BoostRegen = 50;
     public float BoostUsage = 250;
@@ -29,6 +29,9 @@ public class Player : MonoBehaviour{
     public bool CanMove = false;
 
     bool collided = false;
+    public Transform Spawn;
+
+    BetterBumperCar controller;
 
     public void AddBoost(float amount)
     {
@@ -37,6 +40,11 @@ public class Player : MonoBehaviour{
 
     public void Reset()
     {
+        controller.wheel.transform.localRotation = Quaternion.Euler(Vector3.up * (180));
+        transform.position = Spawn.position;
+        transform.rotation = Spawn.rotation;
+        rigidbody.velocity = Vector3.zero;
+        rigidbody.angularVelocity = Vector3.zero;
         Boost = 0;
         Health = MaxHealth;
     }
@@ -45,6 +53,8 @@ public class Player : MonoBehaviour{
     {
         Health = MaxHealth;
         rigidbody = GetComponent<Rigidbody>();
+        controller = GetComponent<BetterBumperCar>();
+        if (controller == null) throw new System.Exception("Could not find Controller Script");
         if (rigidbody == null)
             rigidbody = gameObject.AddComponent<Rigidbody>();
     }
