@@ -13,6 +13,8 @@ public class BetterBumperCar : MonoBehaviour{
     public float Speed = 100.0f;
     public float RotaionalSpeed = 200.0f;
 
+    public float BoostMultiplier = 2.5f;
+
     Vector3 velocity;
 
     public float Resistance = .1f;
@@ -25,11 +27,18 @@ public class BetterBumperCar : MonoBehaviour{
 
     public string VerticalInputAxis = "Vertical";
     public string HorizontalInputAxis = "Horizontal";
+    public KeyCode BoostKey = KeyCode.LeftShift;
 
+
+    private Player playerComponent;
     void Start()
     {
         if(wheel == null)
             wheel = new GameObject("Wheel");
+
+        playerComponent = GetComponent<Player>();
+        if (playerComponent == null) throw new 
+                System.Exception("Could Not Find Player Component on Player");
 
         Vector2 forward =  new Vector2(transform.forward.x, transform.forward.z);
         float forwardAngle = VectorToAngle(forward);
@@ -45,6 +54,7 @@ public class BetterBumperCar : MonoBehaviour{
 
     void Update()
     {
+        if (!playerComponent.CanMove) return;
         
         velocity = rb.velocity;
 
@@ -81,13 +91,16 @@ public class BetterBumperCar : MonoBehaviour{
         float forwardAmount = Vector2.Dot(dirVector.normalized, -forward.normalized);
         float rightAmount = Vector2.Dot(dirVector.normalized, -right.normalized);
 
-
-        Debug.DrawRay(new Vector3(offset.x, 0, offset.y), new Vector3(dirVector.x, 0, dirVector.y), Color.red);
-        Debug.DrawRay(new Vector3(position.x, 0, position.y), new Vector3(Dir.x, 0, Dir.y), Color.blue);
-
         float VInput = Input.GetAxis(VerticalInputAxis);
 
         float speed = VInput * Speed;
+
+        if(Input.GetKey(BoostKey) && playerComponent.Boost > 0)
+        {
+            speed *= BoostMultiplier;
+            playerComponent.Boost -= Time.deltaTime * playerComponent.BoostUsage;
+
+        }
 
         Vector2 speedDir = (Dir * forwardAmount) * speed * Time.deltaTime;
         

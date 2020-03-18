@@ -20,17 +20,15 @@ public class PickUp : MonoBehaviour
         isAlive = false;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag == "Player")
-        {
-            Kill();
-            OldPlayer player = collision.transform.GetComponent<OldPlayer>();
+        if (collision.gameObject.tag == "Player"){
 
-            if (player.BoostAmount + boostAmount > 1.0f)
-                player.BoostAmount = 1.0f;
-            else
-               player.BoostAmount += boostAmount;
+            Player player = collision.transform.GetComponent<Player>();
+            if (player.Boost >= player.MaxBoost) return;
+            Kill();
+            
+            player.AddBoost(boostAmount);
 
         }
     }

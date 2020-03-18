@@ -1,58 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1966519572143913522
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1966519572143913484}
-  - component: {fileID: 1966519572143913485}
-  m_Layer: 0
-  m_Name: BoostBarController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1966519572143913484
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1966519572143913522}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -958.38544, y: -498.2638, z: 3.2405686}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 220839729254132517}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1966519572143913485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1966519572143913522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d85e51afd4bc4ba4a9e531ba79dc62c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BoostAmount: 0.25
-  boostBar:
-  - {fileID: 28378958488968395}
-  - {fileID: 8979400173718027077}
-  healthBar:
-  - {fileID: 1448657067021013327}
-  - {fileID: 7557963267897439937}
-  Player:
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &6132082673783424416
 GameObject:
   m_ObjectHideFlags: 0
@@ -62,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 220839729254132517}
+  - component: {fileID: 1163755521313511872}
   m_Layer: 5
   m_Name: BoostBars
   m_TagString: Untagged
@@ -80,7 +28,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1966519572143913484}
   - {fileID: 8677450535536908797}
   - {fileID: 330329750007250547}
   m_Father: {fileID: 0}
@@ -91,6 +38,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1163755521313511872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6132082673783424416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d85e51afd4bc4ba4a9e531ba79dc62c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BoostAmount: 0.25
+  boostBar:
+  - {fileID: 28378958488968395}
+  - {fileID: 8979400173718027077}
+  healthBar:
+  - {fileID: 1448657067021013327}
+  - {fileID: 7557963267897439937}
+  Player:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1001 &1966519572947751920
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -151,7 +120,7 @@ PrefabInstance:
     - target: {fileID: 2296811662084910467, guid: 7039cc3f353da514b92c5dcf7cd56c59,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2296811662084910467, guid: 7039cc3f353da514b92c5dcf7cd56c59,
         type: 3}
@@ -330,7 +299,7 @@ PrefabInstance:
     - target: {fileID: 2296811662084910467, guid: 7039cc3f353da514b92c5dcf7cd56c59,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2296811662084910467, guid: 7039cc3f353da514b92c5dcf7cd56c59,
         type: 3}

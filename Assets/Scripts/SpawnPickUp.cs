@@ -31,29 +31,29 @@ public class SpawnPickUp : MonoBehaviour
         Vector3 spawnCenter = transform.position;
         Vector3 spawnRadius = this.transform.lossyScale * 4;
         pickupObject.transform.position = new Vector3(spawnCenter.x + Random.Range(-spawnRadius.x, spawnRadius.x), spawnCenter.y + 1, spawnCenter.z + Random.Range(-spawnRadius.z, spawnRadius.z));
-        Physics.Raycast(pickupObject.transform.position, down, out hit, 200);
+        //Physics.Raycast(pickupObject.transform.position, down, out hit, 200);
 
-        while (hit.collider.gameObject != this.gameObject)
-        {
-            pickupObject.transform.position = new Vector3(spawnCenter.x + Random.Range(-spawnRadius.x, spawnRadius.x), spawnCenter.y + 1, spawnCenter.z + Random.Range(-spawnRadius.z, spawnRadius.z));
+        //while (hit.collider.gameObject != this.gameObject)
+        //{
+        //    pickupObject.transform.position = new Vector3(spawnCenter.x + Random.Range(-spawnRadius.x, spawnRadius.x), spawnCenter.y + 1, spawnCenter.z + Random.Range(-spawnRadius.z, spawnRadius.z));
 
-            Physics.Raycast(pickupObject.transform.position, down, out hit, 200);
-        }
+        //    Physics.Raycast(pickupObject.transform.position, down, out hit, 200);
+        //}
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            RelocatePickUp();
-        }
+        //if (Input.GetKey(KeyCode.Space))
+        //{
+        //    RelocatePickUp();
+        //}
         
-        if (Input.GetKey(KeyCode.K))
-        {
-            pickupScript.Kill();
-        }
+        //if (Input.GetKey(KeyCode.K))
+        //{
+        //    pickupScript.Kill();
+        //}
 
         if (!pickupScript.isAlive && respawnTimer > respawnDelay)
         {
