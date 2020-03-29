@@ -143,6 +143,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2877679721401011698}
   - component: {fileID: 7103626573202488963}
+  - component: {fileID: 8834791086134119335}
+  - component: {fileID: 6438669765197615048}
   - component: {fileID: 2464244329691577999}
   - component: {fileID: 7103626573202488989}
   - component: {fileID: 1999170613947608932}
@@ -181,7 +183,33 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.86, y: 1, z: 6.94}
+  m_Size: {x: 2.94, y: 1, z: 7.58}
+  m_Center: {x: 0, y: 0.5, z: -1.45}
+--- !u!65 &8834791086134119335
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275868539095695329}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.46, y: 1, z: 6.94}
+  m_Center: {x: 0, y: 0.5, z: -1.45}
+--- !u!65 &6438669765197615048
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275868539095695329}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.93, y: 1, z: 6.42}
   m_Center: {x: 0, y: 0.5, z: -1.45}
 --- !u!114 &2464244329691577999
 MonoBehaviour:
@@ -219,7 +247,7 @@ MonoBehaviour:
   Speed: 100
   RotaionalSpeed: 200
   BoostMultiplier: 2.5
-  Resistance: 0.005
+  Resistance: 10
   WheelOffset: {x: 0, y: -3.48}
   m: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
   wheel: {fileID: 3967094661835045981}
@@ -236,7 +264,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0.6
-  m_AngularDrag: 0
+  m_AngularDrag: 2
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0

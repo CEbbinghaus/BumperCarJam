@@ -70,7 +70,7 @@ public class BetterBumperCar : MonoBehaviour{
         
 
         Direction = wheel.transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
-        rotation = transform.rotation.eulerAngles.y;
+        //rotation = transform.rotation.eulerAngles.y;
 
         Vector2 dirVector = new Vector2(Mathf.Sin(Direction), Mathf.Cos(Direction));
 
@@ -95,14 +95,16 @@ public class BetterBumperCar : MonoBehaviour{
 
         float speed = VInput * Speed;
 
+        //Default Amount. Will
+        float boostAmount = 1.0f;
+
         if(Input.GetKey(BoostKey) && playerComponent.Boost > 0)
         {
-            speed *= BoostMultiplier;
+            boostAmount = BoostMultiplier;
             playerComponent.Boost -= Time.deltaTime * playerComponent.BoostUsage;
-
         }
 
-        Vector2 speedDir = (Dir * forwardAmount) * speed * Time.deltaTime;
+        Vector2 speedDir = (Dir * forwardAmount) * speed * boostAmount * Time.deltaTime;
         
 
         velocity += new Vector3(speedDir.x, 0, speedDir.y);
@@ -110,9 +112,9 @@ public class BetterBumperCar : MonoBehaviour{
         //velocity.x *= (1 - Resistance);
         //velocity.z *= (1 - Resistance);
 
-        rotation = rotation + (rightAmount * ((RotaionalSpeed * VInput)) * Time.deltaTime);
+        // rotation = rotation + (rightAmount * ((RotaionalSpeed * VInput)) * Time.deltaTime);
 
-        rb.rotation = Quaternion.Euler(0, rotation, 0);
+        rb.angularVelocity += new Vector3(0, (rightAmount * boostAmount * ((RotaionalSpeed * VInput))) * Time.deltaTime, 0);
 
         rb.velocity = velocity;
     }
